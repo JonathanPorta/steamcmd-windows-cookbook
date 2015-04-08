@@ -9,7 +9,7 @@ include_recipe 'windows'
 windows_zipfile node['steamcmd']['install']['install_directory'] do
   source node['steamcmd']['install']['package_url']
   action :unzip
-  not_if { ::File.exist?("#{ node['steamcmd']['install']['install_directory'] }steamcmd.exe") }
+  not_if { ::File.exist?(node['steamcmd']['install']['install_directory'] + 'steamcmd.exe') }
 end
 
 windows_path node['steamcmd']['install']['install_directory'] do
