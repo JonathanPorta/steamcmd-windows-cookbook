@@ -14,5 +14,5 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[steamcmd::install]
+      - recipe[steamcmd_test]
     attributes:
