@@ -5,7 +5,8 @@ class Chef
     class Steamcmd < Chef::Provider
 
       def load_current_resource
-        @exists = directory_exists?(new_resource.path)
+        # @exists = directory_exists?(new_resource.path)
+        @exists = false
       end
 
       def action_install
