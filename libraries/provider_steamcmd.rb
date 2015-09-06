@@ -25,11 +25,23 @@ class Chef
         b = "-beta #{ new_resource.beta }" if new_resource.beta
         # Install app via powershell
         # TODO: Figure out how to handle the path to the steamcmd executable. It's in the path, but the current ps windows seems to not have it.
-        Chef::Resource::PowershellScript.new "Installing Steam app #{ new_resource.app_id }" do
+        command_string = "c:/steamcmd/steamcmd.exe +login anonymous +force_install_dir #{ new_resource.path } +app_update #{ new_resource.app_id } #{ b } validate +quit"
+        Chef::Log.debug "======================================================="
+        Chef::Log.debug "Built a powershell command that looks like: "
+        Chef::Log.debug command_string
+        Chef::Log.debug "======================================================="
+        p = Chef::Resource::PowershellScript.new "Installing Steam app #{ new_resource.app_id }" do
           code <<-EOH
-            c:/steamcmd/steamcmd.exe +login anonymous +force_install_dir #{ new_resource.path } +app_update #{ new_resource.app_id } #{ b } validate +quit
+            #{ command_string }
           EOH
         end
+        Chef::Log.debug "======================================================="
+        Chef::Log.debug p
+        Chef::Log.debug "======================================================="
+        p.run_action(:run)
+        Chef::Log.debug "======================================================="
+        Chef::Log.debug p
+        Chef::Log.debug "======================================================="
       end
     end
   end
